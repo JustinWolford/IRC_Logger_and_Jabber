@@ -18,14 +18,14 @@ def config(filename):
 			temp = line.replace(":", "").split()
 			if temp[0] == "alert":
 				key = temp[0]
-				value = ast.eval(join(temp[1:]))
+				value = ast.literal_eval(line.split(None, 1)[1])
 			else:	
 				key = temp[0]
 				value = temp[1:]
-				config_data[key] = value
+			config_data[key] = value
 		db_file.close()
 		return config_data
-	except:
+	except IOError:
 		print filename, "missing."
 		exit();
 

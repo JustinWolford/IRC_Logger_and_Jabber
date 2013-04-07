@@ -167,8 +167,11 @@ class Logger(irclib.SimpleIRCClient):
 		source = nm_to_n(event.source())
 		if text.split()[0].lower() == "helpme":
 			self.bot.setState("online","Looking for help")
-			for (channel, helpers) in alert_list:
+			print"Alert List: "
+			print self.alert_list
+			for (channel, helpers) in self.alert_list:
 				for h in helpers:
+					print "asking " + h + " for help!"
 					self.bot.replyMessage(h, source + " is asking for help in IRC!")
 					connection.privmsg(source, "I have asked the the helper gnomes to come help")
 
