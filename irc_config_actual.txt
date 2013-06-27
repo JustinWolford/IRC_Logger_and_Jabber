@@ -1,9 +1,0 @@
-server: irc.freenode.net
-port: 6667
-channel: #OSUCS275SP13 #OSUCS494SP13
-nick: Loggy_McGee
-reconnect: 300
-# This is a list of channels and emails that should be alerted to help requests.
-# The format should be alert: [('channel0', ('JabberAccount0', ... 'JabberAccountN')), ...
-# ('channelN', ('JabberAccount0', ... 'JabberAccountN'))]
-alert: [('#OSUCS275SP13', ('jdwolford@gmail.com')), ('#OSUCS494SP13', ('jdwolford@gmail.com'))]
