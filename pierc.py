@@ -204,7 +204,8 @@ def main():
 				mysql_settings["user"][0],
 				mysql_settings["password"][0],
 				irc_settings["alert"],
-				"justinsbot@jabber.org", "greenbanana" )
+				irc_setting["jabberuser"],
+				irc_setting["jabberpass"] )
 	while True:
 		c.process_once(timeout=1)
 		#summoner_bot.StepOn()
