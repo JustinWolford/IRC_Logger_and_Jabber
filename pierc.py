@@ -13,8 +13,8 @@ import datetime
 #mine
 import pierc_db
 import config
-import xmpp
-
+from pyxmpp.jid import JID
+from pyxmpp.jabber.simple import send_message
 
 # Configuration
 
@@ -108,26 +108,12 @@ class Logger(irclib.SimpleIRCClient):
 			getattr(self, m)(c, e)
 
 	def _ask_for_help(self, send_to, message):
-		jid=xmpp.JID(self.bot_account)
-		user, server, password = jid.getNode(), jid.getDomain(), self.bot_password
-		conn=xmpp.Client(server)
-		conres=conn.connect( server=("jabber.org", 5222) )
-		if not conres:
-			print "Unable to connect to server %s!"%server
-			sys.exit(1)
-		if conres<>'tls':
-			print "Warning: unable to estabilish secure connection - TLS failed!"
-		authres=conn.auth(user, password)
-		if not authres:
-			print "Unable to authorize on %s - Plsese check your name/password."%server
-			sys.exit(1)
-		if authres<>"sasl":
-			print "Warning: unable to perform SASL auth os %s. Old authentication method used!"%server
-		pres=xmpp.Presence(priority=5, show="available", status="Looking for help")
-		conn.send(pres)
-		time.sleep(5)
-		conn.send(xmpp.Message(send_to, message))
-		#conn.disconnect()
+		jid=JID('justinsbot@jabber.org')
+		if not jid.resource:
+		    jid=JID(jid.node,jid.domain,"send_message")
+		recpt=JID('jdwolford@gmail.com')
+		send_message(jid,'greenbanana',recpt,'We need help!','Help!')
+		print "asking for help"
 
 	def on_nicknameinuse(self, c, e):
 		c.nick(c.get_nickname() + "_")
@@ -232,5 +218,5 @@ if __name__ == "__main__":
 			main()
 		except irclib.ServerNotConnectedError:
 			print "Server Not Connected! Let's try again!"             
-			time.sleep(float(reconnect_interval))
+			time.sleep(float(300)) #reconnect_interval not working
 			
